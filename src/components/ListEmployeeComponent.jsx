@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { listEmployees } from '../services/EmployeeService'
 import { useNavigate } from 'react-router-dom'
-
+import { deleteEmployee } from '../services/EmployeeService'
 
 const ListEmployeeComponent = () => {
     const [employee, setEmployee] = useState([])
@@ -16,7 +16,7 @@ const ListEmployeeComponent = () => {
             //setEmployee=response.data;
  
              // employees=response.data;
-             console.log(employee);
+            //  console.log(employee);
              setEmployee(response.data);
          }) .catch(error => {
                   console.error (error);
@@ -32,8 +32,8 @@ const ListEmployeeComponent = () => {
     }
     
     function removeEmployee(id){
-        console.log(id);
-        daleteEmployee(id).then((response) => {
+       // console.log(id);
+       deleteEmployee(id).then((response) => {
             getAllEmployees();
         }).catch(error => {
             console.error(error);
