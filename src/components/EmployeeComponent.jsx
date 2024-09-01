@@ -5,13 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 const EmployeeComponent = () => {
    const[firstName, setFirstName]= useState('')
    const[lastName, setLastName]= useState('')
-   const[email, setEmail]= useState('')
+   const[emailId, setEmail]= useState('')
    const{id} = useParams();
 
    const[errors, setErrors] = useState({
      firstName:'',
      lastName:'',
-     email:''
+     emailId:''
    })
 
    const navigateor = useNavigate();
@@ -19,12 +19,12 @@ const EmployeeComponent = () => {
 function handlesaveEmployee(e) {
   e.preventDefault();
   if(validateForm()){
-    const employee = {firstName,lastName, email}
-  console.log(employee)
+    const employee = {firstName,lastName, emailId}
+    console.log(employee)
 
   createEmployee(employee).then((response) => {
     console.log(response.data);
-    navigateor('/employees')
+    navigateor('/')
   })
   }
 }
@@ -50,10 +50,10 @@ function validateForm(){
   }
 
   if (firstName.trim()){
-    errorsCopy.email ='';
+    errorsCopy.emailId ='';
   }
   else{
-    errorsCopy.email ='Email is required';
+    errorsCopy.emailId ='Email is required';
     valid = false;
   }
 
@@ -111,12 +111,12 @@ function pageTitle(){
                   <input 
                          type='text'
                          placeholder='Enter Employee Email'
-                         name='email'
-                         value={email}
-                         className={`form-control ${errors.email ? 'is-invalid':''}`}
+                         name='emailId'
+                         value={emailId}
+                         className={`form-control ${errors.emailId ? 'is-invalid':''}`}
                          onChange={(e) => setEmail(e.target.value)}>
                   </input>
-                  {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
+                  {errors.email_id && <div className='invalid-feedback'>{errors.emailId}</div>}
                 </div>
 
                 <button className='btn btn-success' onClick={handlesaveEmployee}>Submit</button>

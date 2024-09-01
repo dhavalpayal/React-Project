@@ -9,7 +9,11 @@ const ListEmployeeComponent = () => {
     
     useEffect (() => {
         listEmployees().then((response) => {
-            setEmployees(response.data);
+           //setEmployee=response.data;
+
+            // employees=response.data;
+            console.log(employee);
+            setEmployee(response.data);
         }) .catch(error => {
                  console.error (error);
         })
@@ -39,7 +43,7 @@ const ListEmployeeComponent = () => {
                             <td>{employee.id}</td>
                             <td>{employee.firstName}</td>
                             <td>{employee.lastName}</td>
-                            <td>{employee.email}</td>
+                            <td>{employee.emailId}</td>
                         </tr>
                     )
                 }
