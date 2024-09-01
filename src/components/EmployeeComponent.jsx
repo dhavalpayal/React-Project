@@ -14,7 +14,7 @@ const EmployeeComponent = () => {
     emailId: ''
   })
 
-  const navigateor = useNavigate();
+  const navigator = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -38,7 +38,7 @@ const EmployeeComponent = () => {
       if (id) {
         upadateEmployee(id, employee).then((response) => {
           console.log(response.data);
-          navigator('/employees');
+          navigator('/');
         }).catch(error => {
           console.error(error);
         })
