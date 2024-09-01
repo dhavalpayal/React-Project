@@ -8,16 +8,20 @@ const ListEmployeeComponent = () => {
     const navigateor = useNavigate();
     
     useEffect (() => {
-        listEmployees().then((response) => {
-           //setEmployee=response.data;
-
-            // employees=response.data;
-            console.log(employee);
-            setEmployee(response.data);
-        }) .catch(error => {
-                 console.error (error);
-        })
+       getAllEmployees();
     }, [])
+
+    function getAllEmployees(){
+        listEmployees().then((response) => {
+            //setEmployee=response.data;
+ 
+             // employees=response.data;
+             console.log(employee);
+             setEmployee(response.data);
+         }) .catch(error => {
+                  console.error (error);
+         })
+    }
 
     function addNewEmployee(){
           navigateor('/add-employee');
@@ -25,6 +29,15 @@ const ListEmployeeComponent = () => {
 
     function updateEmployee(id){
         navigateor(`/edit-employee/ ${id}`)
+    }
+    
+    function removeEmployee(id){
+        console.log(id);
+        daleteEmployee(id).then((response) => {
+            getAllEmployees();
+        }).catch(error => {
+            console.error(error);
+        })
     }
     
   return (
@@ -51,6 +64,7 @@ const ListEmployeeComponent = () => {
                             <td>{employee.emailId}</td>
                             <td>
                                 <button className='btn btn-info' onClick={() => updateEmployee(employee.id)}>Update</button>
+                                <button className='btn btn-danger' onClick={() => removeEmployee(employee.id)}>Delete</button>
                             </td>
                         </tr>
                     )

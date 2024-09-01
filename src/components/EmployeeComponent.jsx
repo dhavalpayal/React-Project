@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { createEmployee } from '../services/EmployeeService'
+import { createEmployee, getEmployee, upadateEmployee } from '../services/EmployeeService'
 import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployeeComponent = () => {
    const[firstName, setFirstName]= useState('')
    const[lastName, setLastName]= useState('')
-   const[emailId, setEmail]= useState('')
+   const[emailId, setEmailId]= useState('')
    const{id} = useParams();
 
    const[errors, setErrors] = useState({
@@ -16,17 +16,41 @@ const EmployeeComponent = () => {
 
    const navigateor = useNavigate();
 
-function handlesaveEmployee(e) {
+   useEffect (() => {
+    if(id) {
+      getEmployee(id).then((response) => {
+        setFirstName(response.data.firstName);
+        setLastName(response.data.lastName);
+        setEmailId(response.data.emailId);
+      }).catch(error =>{
+        console.error(error);
+      })
+    }
+   },[id])
+
+function saveOrUpdateEmployee(e) {
   e.preventDefault();
   if(validateForm()){
+
     const employee = {firstName,lastName, emailId}
     console.log(employee)
 
-  createEmployee(employee).then((response) => {
-    console.log(response.data);
-    navigateor('/')
-  })
-  }
+    if(id){
+      upadateEmployee(id, employee).then((response) => {
+        console.log(response.data);
+        navigator('/employees');
+      }).catch(error => {
+        console.error(error);
+      })
+      }else{
+      createEmployee(employee).then((response) => {
+        console.log(response.data);
+        navigateor('/employees')
+      }).catch(error => {
+        console.error(error);
+      })
+   }
+ }
 }
 
 function validateForm(){
@@ -110,16 +134,16 @@ function pageTitle(){
                   <label className='form-lable'>Email:</label>
                   <input 
                          type='text'
-                         placeholder='Enter Employee Email'
+                         placeholder='Enter Employee EmailId'
                          name='emailId'
                          value={emailId}
                          className={`form-control ${errors.emailId ? 'is-invalid':''}`}
-                         onChange={(e) => setEmail(e.target.value)}>
+                         onChange={(e) => setEmailId(e.target.value)}>
                   </input>
-                  {errors.email_id && <div className='invalid-feedback'>{errors.emailId}</div>}
+                  {errors.emailId && <div className='invalid-feedback'>{errors.emailId}</div>}
                 </div>
 
-                <button className='btn btn-success' onClick={handlesaveEmployee}>Submit</button>
+                <button className='btn btn-success' onClick={saveOrUpdateEmployee}>Submit</button>
 
               </form>
             </div>
