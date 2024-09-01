@@ -3,6 +3,7 @@ import { listEmployees } from '../services/EmployeeService'
 import { useNavigate } from 'react-router-dom'
 import { deleteEmployee } from '../services/EmployeeService'
 
+
 const ListEmployeeComponent = () => {
     const [employee, setEmployee] = useState([])
     const navigateor = useNavigate();
@@ -32,8 +33,8 @@ const ListEmployeeComponent = () => {
     }
     
     function removeEmployee(id){
-       // console.log(id);
-       deleteEmployee(id).then((response) => {
+        console.log(id);
+        deleteEmployee(id).then((response) => {
             getAllEmployees();
         }).catch(error => {
             console.error(error);
